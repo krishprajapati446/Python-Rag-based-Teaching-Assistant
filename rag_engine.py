@@ -157,8 +157,8 @@ Answer naturally like a helpful teacher.
 
     client = Groq(
         api_key=GROQ_API_KEY,
-        timeout=90.0,
-        max_retries=1,
+        timeout=60.0,
+        max_retries=0
     )
     
     response = client.chat.completions.create(
