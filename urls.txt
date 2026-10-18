@@ -1,0 +1,302 @@
+V_no. & V_name
+
+1) Introduction to Programming & Python | Python Tutorial - Day #1
+https://youtu.be/7wnove7K-ZQ
+
+2) Some Amazing Python Programs - The Power of Python | Python Tutorial - Day #2
+https://youtu.be/Tto8TS-fJQU
+
+3) Modules and Pip | Python Tutorial - Day #3
+https://youtu.be/xwKO_y2gHxQ
+
+4) Our First Python Program | Python Tutorial - Day #4
+https://youtu.be/7IWOYhfAcVg
+
+5) Comments, Escape Sequences & Print Statement | Python Tutorial - Day #5
+https://youtu.be/qxPMmW93eDs
+
+6) Variables and Data Types | Python Tutorial - Day #6
+https://youtu.be/ORCuz7s5cCY
+
+7) Exercise 1: Calculator using Python | Python Tutorial - Day #7
+https://youtu.be/FLVqcxnJP_E
+
+8) Exercise 1: Calculator using Python (Solution) | Python Tutorial - Day #8
+https://youtu.be/dohaSBCKCr0
+
+9) Typecasting in Python | Python Tutorial - Day #9
+https://youtu.be/Pu5bqySSSS0
+
+10) Taking User Input in Python | Python Tutorial - Day #10
+https://youtu.be/WvG-R-xXouA
+
+11) Strings in Python | Python Tutorial - Day #11
+https://youtu.be/kMNFQYArrLg
+
+12) Strings Slicing and Operations on Strings in Python | Python Tutorial - Day #12
+https://youtu.be/8jW7lpT8HW8
+
+13) String Methods in Python | Python Tutorial - Day #13
+https://youtu.be/0INvoK_T0cE
+
+14) If Else Conditional Statements in Python | Python Tutorial - Day #14
+https://youtu.be/ceiuLR2ysas
+
+15) Exercise 2: Good Morning Sir | Python Tutorial - Day #15
+https://youtu.be/d7ng_aV4qdI
+
+16) Match Case Statements in Python | Python Tutorial - Day #16
+https://youtu.be/bthQCK1QAmQ
+
+17) For Loops in Python | Python Tutorial - Day #17
+https://youtu.be/fIYVzKp0q5w
+
+18) While Loops in Python | Python Tutorial - Day #18
+https://youtu.be/-tCFyIyKVx0
+
+19) break and continue in Python | Python Tutorial - Day #19
+https://youtu.be/RkwJnjdrm70
+
+20) Functions in Python | Python Tutorial - Day #20
+https://youtu.be/dyvxxJSGUsE
+
+21) Function Arguments in Python | Python Tutorial - Day #21
+https://youtu.be/0d6b6fFuCkE
+
+22) Introduction to Lists in Python | Python Tutorial - Day #22
+https://youtu.be/eF6nK5bSlmg
+
+23) List Methods in Python | Python Tutorial - Day #23
+https://youtu.be/scWc3F8LbOo
+
+24) Tuples in Python | Python Tutorial - Day #24
+https://youtu.be/PipsOUDKrVk
+
+25) Operations on Tuples in Python | Python Tutorial - Day #25
+https://youtu.be/XblLSduioJI
+
+26) Exercise 2: Solution & Shoutouts | Python Tutorial - Day #26
+https://youtu.be/IZBKXWrbqBM
+
+27) Exercise 3: Kaun Banega Crorepati (KBC) | Python Tutorial - Day #27
+https://youtu.be/Vs1Z7K70Mvw
+
+28) f-strings in Python | Python Tutorial - Day #28
+https://youtu.be/ixmxgUf8yIg
+
+29) Docstrings in Python | Python Tutorial - Day #29
+https://youtu.be/SJzsNd7SM0g
+
+30) Recursion in Python | Python Tutorial - Day #30
+https://youtu.be/XYwJKFB8DUk
+
+31) Sets in Python | Python Tutorial - Day #31
+https://youtu.be/l3kCO8cVA6o
+
+32) Set Methods in Python | Python Tutorial - Day #32
+https://youtu.be/HOrutCnp2zo
+
+33) Dictionaries in Python | Python Tutorial - Day #33
+https://youtu.be/j2G68uQtOwM
+
+34) Dictionary Methods in Python | Python Tutorial - Day #34
+https://youtu.be/LmbFwaLjT9k
+
+35) for Loop with else in Python | Python Tutorial - Day #35
+https://youtu.be/qUkcIgErZzc
+
+36) Exception Handling in Python | Python Tutorial - Day #36
+https://youtu.be/4LKo6dlku7M
+
+37) Finally keyword in Python | Python Tutorial - Day #37
+https://youtu.be/r_iuC-IDpPM
+
+38) Raising custom errors in Python | Python Tutorial - Day #38
+https://youtu.be/Phr4CNppYoM
+
+39) Kaun Banega Crorepati: Exercise 3 - Solution & Shoutouts | Python Tutorial - Day #39
+https://youtu.be/nyfeYAxP-EM
+
+40) Exercise 4: Secret Code Language | Python Tutorial - Day #40
+https://youtu.be/pOWJ6WgVRIU
+
+41) Short hand if else statements | Python Tutorial - Day #41
+https://youtu.be/Qqx_zNmQVGI
+
+42) Enumerate Function in Python | Python Tutorial - Day #42
+https://youtu.be/kGnYc_h1geM
+
+43) Virtual Environment in Python | Python Tutorial - Day #43
+https://youtu.be/nt6LlFTWOkg
+
+44) How import works in Python | Python Tutorial - Day #44
+https://youtu.be/Pr7UOr35NcI
+
+45) if __name__ == "__main__" in Python | Python Tutorial - Day #45
+https://youtu.be/y_CX2Rvitk8
+
+46) os Module in Python | Python Tutorial - Day #46
+https://youtu.be/dkVYSsL90Oo
+
+47) Exercise 4: Solutions and Shoutouts | Python Tutorial - Day #47
+https://youtu.be/4lSQfOJKn7U
+
+48) Local vs Global Variables in Python| Python Tutorial - Day #48
+https://youtu.be/RaG6GgcDt54
+
+49) File IO in Python | Python Tutorial - Day #49
+https://youtu.be/eDBPlcWYses
+
+50) read(), readlines() and other methods | Python Tutorial - Day #50
+https://youtu.be/l1FsnQxET9U
+
+51) seek(), tell() and other functions | Python Tutorial - Day #51
+https://youtu.be/PByYX-2l5Us
+
+52) Lambda functions in Python | Python Tutorial - Day #52
+https://youtu.be/UfFWf-PXUqE
+
+53) Map, Filter and Reduce in Python | Python Tutorial - Day #53
+https://youtu.be/OErhjT4f5Cs
+
+54) 'is' vs '==' in Python | Python Tutorial - Day #54
+https://youtu.be/TOemdfX_0xc
+
+55) Exercise 5 - Snake Water Gun | Python Tutorial - Day #55
+https://youtu.be/dDsh7FT6-0I
+
+56) Introduction to OOPs in Python | Python Tutorial - Day #56
+https://youtu.be/HQnoYzxOHMw
+
+57) Classes and Objects in Python | Python Tutorial - Day #57
+https://youtu.be/a7baAGCBA9U
+
+58) Constructors in Python | Python Tutorial - Day #58
+https://youtu.be/12HRkYld22c
+
+59) Decorators in Python | Python Tutorial - Day #59
+https://youtu.be/PTBZ674EsvI
+
+60) Getters and Setters in Python | Python Tutorial - Day #60
+https://youtu.be/2gbCT8h9uyk
+
+61) Inheritance in Python | Python Tutorial - Day #61
+https://youtu.be/-KsfUaQEY9Y
+
+62) Access Modifiers in Python | Python Tutorial - Day #62
+https://youtu.be/43FK20rWvKQ
+
+63) Snake Water Gun Game in Python - Exercise 5 - Solution | Python Tutorial - Day #63
+https://youtu.be/GkfBpm6MN9A
+
+64) Exercise 6 - Library Management System in Python | Python Tutorial - Day #64
+https://youtu.be/mlDZTSH2FFc
+
+65) Static Methods in Python | Python Tutorial - Day #65
+https://youtu.be/GcSVYNSsJxo
+
+66) Instance variables vs Class variables in Python | Python Tutorial - Day #66
+https://youtu.be/tQdaeiF4j38
+
+67) Exercise 6 Solution - Library Management Software in Python | Python Tutorial - Day #67
+https://youtu.be/uRIEjf2vCIg
+
+68) Exercise 7 - Clear the Clutter | Python Tutorial - Day #68
+https://youtu.be/6KvnP13TnhY
+
+69) Class Methods in Python | Python Tutorial - Day #69
+https://youtu.be/9ynmDLc5FYo
+
+70) Class Methods as Alternative Constructors in Python | Python Tutorial - Day #70
+https://youtu.be/FGlKJdy--p8
+
+71) dir, __dict__ and help method in Python | Python Tutorial - Day #71
+https://youtu.be/Wgo9TaBcuJ4
+
+72) super keyword in Python | Python Tutorial - Day #72
+https://youtu.be/P648reefNh0
+
+73) Magic/Dunder Methods in Python | Python Tutorial - Day #73
+https://youtu.be/DmgQVJXhuLQ
+
+74) Method Overriding in Python | Python Tutorial - Day #74
+https://youtu.be/46_yfYC36JY
+
+75) Exercise 7 Solution + Shoutouts | Python Tutorial - Day #75
+https://youtu.be/Wt9Shnzv_Yg
+
+76) Exercise 8 - Merge the PDF | Python Tutorial - Day #76
+https://youtu.be/uUbvJ7ZEhPE
+
+77) Operator Overloading in Python | Python Tutorial - Day #77
+https://youtu.be/D67-b2t-y4k
+
+78) Single Inheritance in Python | Python Tutorial - Day #78
+https://youtu.be/U53_Gw55NI8
+
+79) Multiple Inheritance in Python | Python Tutorial - Day #79
+https://youtu.be/4o7xSHgKlvI
+
+80) Multilevel Inheritance in Python | Python Tutorial - Day #80
+https://youtu.be/Il7XMJJeXiA
+
+81) Hybrid and Hierarchical Inheritance in Python | Python Tutorial - Day #81
+https://youtu.be/B4Q8zxRkm_I
+
+82) Exercise 8 - Merge the Pdf Solution in Python | Python Tutorial - Day #82
+https://youtu.be/qKKGemhBRVM
+
+83) Exercise 9 - Shoutouts to Everyone | Python Tutorial - Day #83
+https://youtu.be/1WjwnlRXfHc
+
+84) Time Module in Python | Python Tutorial - Day #84
+https://youtu.be/oTtIvV-Q1FY
+
+85) Creating command line utility in python | Python Tutorial - Day #85
+https://youtu.be/3IAu6-pgw7I
+
+86) Walrus Operator in Python | Python Tutorial - Day #86
+https://youtu.be/NCmMEEyzLT8
+
+87) Shutil Module in Python | Python Tutorial - Day #87
+https://youtu.be/wII2JhNACJE
+
+88) Exercise 9: Solution - Shoutouts to Everyone | Python Tutorial - Day #88
+https://youtu.be/C9VP-56RXNM
+
+89) Requests Module in Python | Python Tutorial - Day #89
+https://youtu.be/Nsb3bLIlO4w
+
+90) Exercise 10: News App in Python | Python Tutorial - Day #90
+https://youtu.be/BGzFp9mwFQ4
+
+91) Generators in Python | Python Tutorial - Day #91
+https://youtu.be/ixd-u3pmsUc
+
+92) Function Caching in Python | Python Tutorial - Day #92
+https://youtu.be/K8gjSwc3Rlo
+
+93) Exercise 10 - News App Solution & Shoutout | Python Tutorial - Day #93
+https://youtu.be/bnAz7Kb2efE
+
+94) Exercise 11 - Drink Water Reminder | Python Tutorial - Day #94
+https://youtu.be/1i4piFhpnm8
+
+95) Regular Expressions in Python | Python Tutorial - Day #95
+https://youtu.be/TCWOwavqFrw
+
+96) AsyncIO in Python | Python Tutorial - Day #96
+https://youtu.be/lgoB3_-ejnI
+
+97) Multithreading in Python | Python Tutorial - Day #97
+https://youtu.be/ICbU6zAKtqQ
+
+98) MultiProcessing in Python | Python Tutorial - Day #98
+https://youtu.be/zGe-9LfnAaA
+
+99) Exercise 11: Solution + Shoutouts - Desktop Notification System | Python Tutorial - Day #99
+https://youtu.be/18vZnLqXMoM
+
+100) Conclusion and Where to go from here | Python Tutorial - Day #100
+https://youtu.be/5Pz8WGiMJ_c
+

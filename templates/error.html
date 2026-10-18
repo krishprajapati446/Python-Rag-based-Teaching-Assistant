@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Error {{ code }}{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <h1>Something needs attention</h1>
+  <p>{{ message }}</p>
+  <p class="muted">Check your environment variables and server logs. Do not share secret API keys in screenshots.</p>
+  <a class="button button-link" href="{{ url_for('login') }}">Back to login</a>
+</section>
+{% endblock %}

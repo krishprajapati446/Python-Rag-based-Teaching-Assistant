@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Course Videos | Python AI Teaching Assistant{% endblock %}
+{% block content %}
+<section class="welcome">
+  <div class="eyebrow">THE ULTIMATE PYTHON COURSE</div>
+  <h1>📚 Course Videos</h1>
+  <p class="muted">Apne lessons dekho aur har video complete hone par progress mark karo. Tumhara progress tumhare account ke saath save hota hai.</p>
+  <a class="button button-outline" href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+</section>
+
+<section class="panel course-summary">
+  <h2>📊 Your Learning Progress</h2>
+  <div class="progress-track" role="progressbar" aria-label="Course completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}">
+    <div class="progress-fill" style="width: {{ progress_percent }}%"></div>
+  </div>
+  <p class="muted"><strong>{{ progress_percent }}%</strong> course completed</p>
+  <div class="course-stats">
+    <div class="course-stat"><strong>{{ total_videos }}</strong><span class="muted small">Total videos</span></div>
+    <div class="course-stat"><strong>{{ completed_count }}</strong><span class="muted small">Completed</span></div>
+    <div class="course-stat"><strong>{{ remaining_count }}</strong><span class="muted small">Remaining</span></div>
+  </div>
+</section>
+
+<form action="{{ url_for('course_videos') }}" method="get" class="course-search">
+  <div class="search-field">
+    <label for="q">Search by video title or number</label>
+    <input id="q" name="q" type="search" value="{{ search_query|e }}" placeholder="Example: loops, functions, 54">
+  </div>
+  <button class="button" type="submit">Search</button>
+  {% if search_query %}<a class="button button-outline" href="{{ url_for('course_videos') }}">Clear</a>{% endif %}
+</form>
+
+<section class="video-list" aria-label="Course video list">
+  {% for video in videos %}
+  <article class="panel video-item{% if video.completed %} completed{% endif %}">
+    <div class="video-details">
+      <div class="eyebrow">VIDEO {{ video.number }}</div>
+      <h3>{{ video.name|e }}</h3>
+      {% if video.completed %}
+        <span class="status completed">✓ Completed</span>
+      {% else %}
+        <span class="status pending">Not completed</span>
+      {% endif %}
+    </div>
+    <div class="video-item-actions">
+      <a class="button" href="{{ video.youtube_url|e }}" target="_blank" rel="noopener noreferrer">▶ Watch on YouTube</a>
+      <form action="{{ url_for('toggle_video_progress') }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="video_number" value="{{ video.number }}">
+        <input type="hidden" name="q" value="{{ search_query|e }}">
+        {% if video.completed %}
+          <button class="button button-outline" type="submit">Undo completion</button>
+        {% else %}
+          <button class="button button-outline" type="submit">✓ Mark completed</button>
+        {% endif %}
+      </form>
+    </div>
+  </article>
+  {% else %}
+  <section class="panel empty-state">
+    <h2>No videos found</h2>
+    <p class="muted">Search term change karke try karo, ya search clear kar do.</p>
+    <a class="button button-outline" href="{{ url_for('course_videos') }}">Show all videos</a>
+  </section>
+  {% endfor %}
+</section>
+{% endblock %}

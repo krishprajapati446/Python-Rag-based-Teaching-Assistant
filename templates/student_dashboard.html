@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Learning Analytics | Python AI Teaching Assistant{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student_dashboard.css') }}">
+<section class="student-analytics">
+  <div class="analytics-heading"><div><p class="eyebrow">YOUR LEARNING JOURNEY</p><h1>📊 Student Dashboard</h1><p class="muted">Track your Python learning activity and course progress.</p></div><a class="button button-outline" href="{{ url_for('dashboard') }}">← Back to Chat</a></div>
+  {% if warning %}<div class="alert alert-warning">{{ warning }}</div>{% endif %}
+  <div class="analytics-stats">
+    <article class="analytics-card"><span>💬 Questions asked</span><strong>{{ stats.questions }}</strong><small>Recorded learning questions</small></article>
+    <article class="analytics-card"><span>📚 Videos completed</span><strong>{{ stats.completed_videos }} <small>/ {{ stats.total_videos }}</small></strong><small>Based on latest saved progress</small></article>
+    <article class="analytics-card"><span>🎯 Course progress</span><strong>{{ stats.progress_percent }}%</strong><div class="progress-track"><div style="width: {{ stats.progress_percent }}%"></div></div></article>
+    <article class="analytics-card"><span>📈 Activities recorded</span><strong>{{ stats.activities }}</strong><small>Includes saved activity events</small></article>
+  </div>
+  <div class="analytics-chart-grid">
+    <article class="analytics-panel"><h2>Questions over the last 7 days</h2><p class="muted small">Only events saved in activity_logs are included.</p><div class="chart-wrap"><canvas id="questionsChart" aria-label="Questions over the last seven days" role="img"></canvas></div></article>
+    <article class="analytics-panel"><h2>Activity breakdown</h2><p class="muted small">Types of activity currently recorded for your account.</p><div class="chart-wrap"><canvas id="activityChart" aria-label="Activity breakdown" role="img"></canvas></div></article>
+  </div>
+  <article class="analytics-panel recent-learning"><h2>Recent learning</h2>
+    {% if recent_activities %}<ul class="recent-learning-list">{% for item in recent_activities %}<li><span class="activity-dot"></span><div><strong>{{ item.question|e }}</strong><small>{{ item.created_at|replace('T', ' ')|replace('+00:00', '') }}</small></div></li>{% endfor %}</ul>{% else %}<p class="muted">No saved questions yet. Ask a question while Student Learning Memory is enabled to build your activity chart.</p>{% endif %}
+  </article>
+  <p class="muted small analytics-note">Your dashboard is scoped to your signed-in account. Video progress remains tracked even when Student Learning Memory is turned off. Chart.js is loaded from a public CDN.</p>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(() => {
+ const labels = {{ stats.daily_labels|tojson }};
+ const values = {{ stats.daily_questions|tojson }};
+ const activityLabels = {{ stats.activity_labels|tojson }};
+ const activityValues = {{ stats.activity_counts|tojson }};
+ if (!window.Chart) return;
+ const common = {responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{color:getComputedStyle(document.body).color}}}};
+ const q = document.getElementById('questionsChart');
+ if(q) new Chart(q,{type:'bar',data:{labels,datasets:[{label:'Questions',data:values,borderRadius:6,backgroundColor:'rgba(99,102,241,.72)'}]},options:{...common,scales:{x:{ticks:{color:'#8b93a7'},grid:{display:false}},y:{beginAtZero:true,ticks:{precision:0,color:'#8b93a7'},grid:{color:'rgba(130,140,160,.16)'}}}}});
+ const a = document.getElementById('activityChart');
+ if(a) new Chart(a,{type:'doughnut',data:{labels:activityLabels,datasets:[{data:activityValues,backgroundColor:['#6366f1','#14b8a6','#f59e0b','#ec4899','#38bdf8','#a78bfa','#84cc16','#fb7185'],borderWidth:0}]},options:{...common,cutout:'62%'}});
+})();
+</script>
+{% endblock %}

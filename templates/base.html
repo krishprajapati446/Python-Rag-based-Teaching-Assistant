@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Python AI Teaching Assistant{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-group">
+      {% if session.get('user') %}
+      <button class="sidebar-toggle button button-outline" type="button" id="sidebarToggle"
+              aria-controls="appSidebar" aria-expanded="true"
+              aria-label="Hide sidebar" title="Hide/show sidebar">☰</button>
+      {% endif %}
+      <a class="brand" href="{{ url_for('index') }}">🐍 Python AI Teaching Assistant</a>
+    </div>
+    {% if session.get('user') %}
+    <nav class="topnav" aria-label="Main navigation">
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('student_dashboard') }}">📊 Student Dashboard</a>
+      <a href="{{ url_for('course_videos') }}">📚 Course Videos</a>
+    </nav>
+    <form action="{{ url_for('logout') }}" method="post" class="logout-form">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+      <button class="button button-outline" type="submit">Log out</button>
+    </form>
+    {% endif %}
+  </header>
+  {% if session.get('user') %}
+  <aside class="app-sidebar" id="appSidebar" aria-label="Chat history sidebar">
+    <form action="{{ url_for('new_chat') }}" method="post" class="sidebar-new-chat-form">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+      <button class="button sidebar-new-chat" type="submit">＋ New Chat</button>
+    </form>
+    <div class="sidebar-section-title">💬 Chat History</div>
+    <div class="sidebar-chat-list">
+      {% if sidebar_chat_sessions %}
+        {% for chat in sidebar_chat_sessions %}
+          <div class="sidebar-chat-row">
+            <a class="sidebar-chat-item{% if (active_chat is defined and active_chat and chat.id|string == active_chat.id|string) or request.args.get('chat_id') == chat.id|string %} active{% endif %}"
+               href="{{ url_for('dashboard', chat_id=chat.id) }}"
+               title="{{ (chat.title or 'New Chat')|e }}">
+              <span class="sidebar-chat-icon">💬</span>
+              <span class="sidebar-chat-title">{{ (chat.title or 'New Chat')|e }}</span>
+            </a>
+            <div class="sidebar-chat-actions">
+              <form action="{{ url_for('rename_chat', chat_id=chat.id) }}" method="post"
+                    class="rename-chat-form" data-current-title="{{ (chat.title or 'New Chat')|e }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="title" value="">
+                <button type="button" class="chat-action-button rename-chat-button"
+                        title="Rename chat" aria-label="Rename chat">✎</button>
+              </form>
+              <form action="{{ url_for('delete_chat', chat_id=chat.id) }}" method="post"
+                    class="delete-chat-form">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="chat-action-button delete-chat-button"
+                        title="Delete chat" aria-label="Delete chat">🗑</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="sidebar-empty">Your conversations will appear here.</p>
+      {% endif %}
+    </div>
+    <a class="sidebar-course-link" href="{{ url_for('course_videos') }}">📚 Course Videos &amp; Progress</a>
+  
+    <div class="sidebar-resize-handle" id="sidebarResizeHandle"
+         role="separator" aria-orientation="vertical"
+         aria-label="Resize sidebar" tabindex="0" title="Drag to resize sidebar"></div>
+</aside>
+  {% endif %}
+  <main class="container{% if session.get('user') %} with-sidebar{% endif %}">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="flash-list" aria-live="polite">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer{% if session.get('user') %} footer-with-sidebar{% endif %}">&copy; 2026 Developed by <strong>Krish</strong>. All rights reserved.</footer>
+
+  {% if session.get('user') %}
+  <script>
+    (() => {
+      const toggle = document.getElementById("sidebarToggle");
+      const sidebar = document.getElementById("appSidebar");
+      const handle = document.getElementById("sidebarResizeHandle");
+      if (!toggle || !sidebar) return;
+
+      const MIN_WIDTH = 220;
+      const DEFAULT_WIDTH = 276;
+      const maxWidth = () => Math.max(MIN_WIDTH, Math.min(520, window.innerWidth * 0.60));
+      let sidebarWidth = DEFAULT_WIDTH;
+
+      const save = (key, value) => {
+        try { localStorage.setItem(key, String(value)); } catch (error) {}
+      };
+      const applyWidth = (requestedWidth) => {
+        sidebarWidth = Math.max(MIN_WIDTH, Math.min(maxWidth(), requestedWidth));
+        document.documentElement.style.setProperty("--sidebar-width", sidebarWidth + "px");
+        save("pythonRagSidebarWidth", sidebarWidth);
+      };
+      const applyCollapsed = (collapsed) => {
+        document.body.classList.toggle("sidebar-collapsed", collapsed);
+        toggle.setAttribute("aria-expanded", String(!collapsed));
+        toggle.setAttribute("aria-label", collapsed ? "Show sidebar" : "Hide sidebar");
+        toggle.title = collapsed ? "Show sidebar" : "Hide sidebar";
+      };
+
+      try {
+        const savedWidth = Number(localStorage.getItem("pythonRagSidebarWidth"));
+        if (Number.isFinite(savedWidth) && savedWidth >= MIN_WIDTH) sidebarWidth = savedWidth;
+      } catch (error) {}
+      applyWidth(sidebarWidth);
+
+      let initiallyCollapsed = false;
+      try { initiallyCollapsed = localStorage.getItem("pythonRagSidebarCollapsed") === "true"; } catch (error) {}
+      applyCollapsed(initiallyCollapsed);
+
+      toggle.addEventListener("click", () => {
+        const collapsed = !document.body.classList.contains("sidebar-collapsed");
+        applyCollapsed(collapsed);
+        save("pythonRagSidebarCollapsed", collapsed);
+      });
+
+      if (handle) {
+        let dragging = false;
+        handle.addEventListener("pointerdown", (event) => {
+          if (window.innerWidth <= 760 || document.body.classList.contains("sidebar-collapsed")) return;
+          dragging = true;
+          if (handle.setPointerCapture) handle.setPointerCapture(event.pointerId);
+          document.body.classList.add("sidebar-resizing");
+          event.preventDefault();
+        });
+        handle.addEventListener("pointermove", (event) => {
+          if (dragging) applyWidth(event.clientX);
+        });
+        const stopDragging = () => {
+          if (!dragging) return;
+          dragging = false;
+          document.body.classList.remove("sidebar-resizing");
+        };
+        handle.addEventListener("pointerup", stopDragging);
+        handle.addEventListener("pointercancel", stopDragging);
+        handle.addEventListener("lostpointercapture", stopDragging);
+        handle.addEventListener("keydown", (event) => {
+          if (window.innerWidth <= 760 || document.body.classList.contains("sidebar-collapsed")) return;
+          if (event.key === "ArrowLeft") { applyWidth(sidebarWidth - 14); event.preventDefault(); }
+          if (event.key === "ArrowRight") { applyWidth(sidebarWidth + 14); event.preventDefault(); }
+        });
+      }
+
+      window.addEventListener("resize", () => applyWidth(sidebarWidth));
+    })();
+  </script>
+  {% endif %}
+
+
+  <!-- Markdown rendering and syntax highlighting for AI answers -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.6/purify.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!window.markdownit || !window.DOMPurify) return;
+      const md = window.markdownit({
+        html: false,
+        linkify: true,
+        breaks: true,
+        highlight: function (code, language) {
+          if (window.hljs && language && window.hljs.getLanguage(language)) {
+            try { return window.hljs.highlight(code, { language: language }).value; } catch (e) {}
+          }
+          return window.hljs ? window.hljs.highlightAuto(code).value : md.utils.escapeHtml(code);
+        }
+      });
+      document.querySelectorAll('.markdown-content').forEach(function (element) {
+        const rawText = element.textContent || '';
+        const rendered = md.render(rawText);
+        element.innerHTML = window.DOMPurify.sanitize(rendered);
+
+        // Highlight code blocks and add a one-click Copy button.
+        element.querySelectorAll('pre').forEach(function (pre) {
+          const code = pre.querySelector('code');
+          if (!code) return;
+          if (window.hljs) window.hljs.highlightElement(code);
+          const wrapper = document.createElement('div');
+          wrapper.className = 'code-block-wrapper';
+          pre.parentNode.insertBefore(wrapper, pre);
+          wrapper.appendChild(pre);
+          const toolbar = document.createElement('div');
+          toolbar.className = 'code-toolbar';
+          const langClass = Array.from(code.classList).find(c => c.indexOf('language-') === 0);
+          const lang = document.createElement('span');
+          lang.className = 'code-language-label';
+          lang.textContent = langClass ? langClass.replace('language-', '') : 'Code';
+          const copy = document.createElement('button');
+          copy.type = 'button';
+          copy.className = 'copy-code-button';
+          copy.textContent = 'Copy code';
+          copy.addEventListener('click', async function () {
+            const original = copy.textContent;
+            try {
+              await navigator.clipboard.writeText(code.innerText);
+              copy.textContent = 'Copied ✓';
+            } catch (error) {
+              const range = document.createRange();
+              range.selectNodeContents(code);
+              const selection = window.getSelection();
+              selection.removeAllRanges(); selection.addRange(range);
+              copy.textContent = 'Select and copy';
+            }
+            window.setTimeout(() => { copy.textContent = original; }, 1600);
+          });
+          toolbar.appendChild(lang);
+          toolbar.appendChild(copy);
+          wrapper.insertBefore(toolbar, pre);
+        });
+      });
+
+      // Give the newest answer a gentle progressive reveal after the page returns.
+      // The current Flask route still waits for the model to finish before returning HTML.
+      let animateNewest = false;
+      try { animateNewest = sessionStorage.getItem('ragAnimateNewestAnswer') === '1'; sessionStorage.removeItem('ragAnimateNewestAnswer'); } catch (error) {}
+      if (animateNewest) {
+        const answers = document.querySelectorAll('.assistant-message .markdown-content, .answer-text.markdown-content');
+        const newest = answers[answers.length - 1];
+        if (newest) {
+          Array.from(newest.children).forEach(function (child, index) {
+            child.classList.add('answer-reveal-block');
+            child.style.animationDelay = Math.min(index * 90, 900) + 'ms';
+          });
+        }
+      }
+
+      const askForm = document.querySelector('.question-form');
+      if (askForm) askForm.addEventListener('submit', function () {
+        try { sessionStorage.setItem('ragAnimateNewestAnswer', '1'); } catch (error) {}
+        const button = askForm.querySelector('.ask-submit-button');
+        if (button && !button.disabled) {
+          button.disabled = true;
+          button.innerHTML = '<span class="loading-spinner" aria-hidden="true"></span>Generating answer…';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

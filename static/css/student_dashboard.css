@@ -1,0 +1,26 @@
+
+/* Student Dashboard / Learning Analytics */
+.student-analytics { max-width: 1180px; margin: 0 auto; }
+.analytics-heading { display:flex; align-items:center; justify-content:space-between; gap:18px; margin: 12px 0 28px; }
+.analytics-heading h1 { margin: 6px 0 8px; }
+.analytics-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin:22px 0; }
+.analytics-card,.analytics-panel { min-width:0; padding:22px; background:var(--panel,#121d31); border:1px solid var(--border,#273650); border-radius:16px; }
+.analytics-card { display:flex; flex-direction:column; gap:10px; }
+.analytics-card>span { color:var(--muted,#aab8d0); font-size:.92rem; }
+.analytics-card>strong { font-size:2rem; line-height:1.2; }
+.analytics-card small { color:var(--muted,#aab8d0); font-size:.82rem; }
+.progress-track { height:9px; border-radius:999px; overflow:hidden; background:#26334a; }
+.progress-track>div { height:100%; background:#6ee7c0; border-radius:999px; }
+.analytics-chart-grid { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:16px; margin:18px 0; }
+.analytics-panel h2 { margin-top:0; }
+.chart-wrap { position:relative; height:290px; width:100%; }
+.recent-learning { margin:18px 0; }
+.recent-learning-list { list-style:none; padding:0; margin:0; }
+.recent-learning-list li { display:flex; align-items:flex-start; gap:12px; padding:14px 0; border-bottom:1px solid var(--border,#273650); }
+.recent-learning-list li:last-child { border-bottom:0; }
+.recent-learning-list li>div { display:grid; gap:6px; min-width:0; overflow-wrap:anywhere; }
+.recent-learning-list small { color:var(--muted,#aab8d0); }
+.activity-dot { width:9px; height:9px; margin-top:7px; flex:0 0 9px; border-radius:50%; background:#6ee7c0; }
+.analytics-note { margin:20px 0; }
+@media(max-width:900px){ .analytics-stats{grid-template-columns:repeat(2,minmax(0,1fr));} .analytics-chart-grid{grid-template-columns:1fr;} }
+@media(max-width:560px){ .analytics-heading{align-items:flex-start; flex-direction:column;} .analytics-stats{grid-template-columns:1fr 1fr; gap:10px;} .analytics-card,.analytics-panel{padding:15px;} .analytics-card>strong{font-size:1.55rem;} .chart-wrap{height:240px;} }
