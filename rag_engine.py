@@ -155,7 +155,12 @@ INSTRUCTIONS:
 Answer naturally like a helpful teacher.
 """
 
-    client = Groq(api_key=GROQ_API_KEY)
+    client = Groq(
+        api_key=GROQ_API_KEY,
+        timeout=90.0,
+        max_retries=1,
+    )
+    
     response = client.chat.completions.create(
         model="openai/gpt-oss-120b",
         messages=[{"role": "user", "content": prompt}],
