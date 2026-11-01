@@ -728,19 +728,28 @@ def view_memory():
     return render_dashboard(show_memory=True, memory_entries=entries)
 
 
+
 @app.post("/ask")
 @login_required
 def ask():
+    app.logger.info("[ASK DEBUG] 1. Request received")
+
     user = session["user"]
     user_id = user["id"]
     question = request.form.get("question", "").strip()
     requested_chat_id = request.form.get("chat_id", "").strip()
+
+    app.logger.info("[ASK DEBUG] 2. Question received")
+
     if not requested_chat_id:
-        requested_chat_id = str(session.get("active_chat_id", "") or "").strip()
+        requested_chat_id = str(
+            session.get("active_chat_id", "") or ""
+        ).strip()
 
     if not question:
         flash("Please enter a Python question first.", "warning")
         return redirect(url_for("dashboard", chat_id=requested_chat_id or None))
+
     if len(question) > 2000:
         flash("Please keep your question under 2,000 characters.", "error")
         return redirect(url_for("dashboard", chat_id=requested_chat_id or None))
@@ -748,7 +757,10 @@ def ask():
     active_chat = None
     user_message_saved = False
     assistant_message_saved = False
+
     try:
+        app.logger.info("[ASK DEBUG] 3. Starting chat session")
+
         if requested_chat_id:
             active_chat = get_owned_chat_session(requested_chat_id, user_id)
             if active_chat is None:
@@ -758,33 +770,69 @@ def ask():
 
         chat_id = active_chat["id"]
         session["active_chat_id"] = chat_id
+
+        app.logger.info("[ASK DEBUG] 4. Saving user message")
+
         save_chat_message(chat_id, user_id, "user", question)
         user_message_saved = True
         touch_chat_session(chat_id, user_id)
 
+        app.logger.info("[ASK DEBUG] 5. Starting RAG retrieval")
+
         results = retrieve_chunks(question, top_k=3)
-        memory_entries = get_user_learning_memory(user_id, limit=10) if current_memory_enabled() else []
+
+        app.logger.info(
+            "[ASK DEBUG] 6. RAG retrieval completed. Results: %s",
+            len(results)
+        )
+
+        app.logger.info("[ASK DEBUG] 7. Loading learning memory")
+
+        memory_entries = (
+            get_user_learning_memory(user_id, limit=10)
+            if current_memory_enabled() else []
+        )
+
         memory_text = format_memory_for_prompt(memory_entries)
-        answer = generate_answer(question, results, memory_text=memory_text)
+
+        app.logger.info("[ASK DEBUG] 8. Starting Groq answer generation")
+
+        answer = generate_answer(
+            question,
+            results,
+            memory_text=memory_text
+        )
+
+        app.logger.info("[ASK DEBUG] 9. Groq answer generated")
+
         sources = prepare_sources(results)
         recommended_video = sources[0] if sources else None
 
-        # Keep chat history independent of the Student Learning Memory toggle.
+        app.logger.info("[ASK DEBUG] 10. Saving assistant response")
+
         save_chat_message(chat_id, user_id, "assistant", answer)
         assistant_message_saved = True
         touch_chat_session(chat_id, user_id)
 
-        # Memory controls personalization/activity logging only; it does not control chat history.
         if current_memory_enabled():
             video_numbers = [source["number"] for source in sources]
+
             log_learning_activity(
                 user_id,
                 "ASK_QUESTION",
-                {"question": question, "video_numbers": video_numbers},
+                {
+                    "question": question,
+                    "video_numbers": video_numbers
+                },
             )
+
+        app.logger.info("[ASK DEBUG] 11. Loading chat history")
 
         chat_messages = get_chat_messages(chat_id, user_id)
         chat_sessions = get_user_chat_sessions(user_id)
+
+        app.logger.info("[ASK DEBUG] 12. Request completed successfully")
+
         return render_dashboard(
             question=question,
             answer=answer,
@@ -794,27 +842,44 @@ def ask():
             active_chat=active_chat,
             chat_messages=chat_messages,
         )
+
     except Exception as exc:
-        app.logger.exception("RAG question or chat history operation failed")
+        app.logger.exception(
+            "[ASK DEBUG] FAILED: %s",
+            type(exc).__name__
+        )
+
         if isinstance(exc, (FileNotFoundError, RuntimeError, ValueError)):
             message = str(exc)
         else:
-            message = f"The request failed ({type(exc).__name__}). Check the terminal for details."
+            message = (
+                f"The request failed ({type(exc).__name__}). "
+                "Check the terminal for details."
+            )
 
         chat_messages = []
         chat_sessions = None
+
         if active_chat is not None:
             try:
                 if user_message_saved and not assistant_message_saved:
-                    # Leave the question visible in history even if the AI service failed.
                     save_chat_message(
-                        active_chat["id"], user_id, "assistant",
+                        active_chat["id"],
+                        user_id,
+                        "assistant",
                         "Sorry, I couldn't generate an answer this time. Please try again."
                     )
-                chat_messages = get_chat_messages(active_chat["id"], user_id)
+
+                chat_messages = get_chat_messages(
+                    active_chat["id"], user_id
+                )
                 chat_sessions = get_user_chat_sessions(user_id)
+
             except Exception:
-                app.logger.exception("Could not load the conversation after an error")
+                app.logger.exception(
+                    "[ASK DEBUG] Could not load conversation after error"
+                )
+
         return render_dashboard(
             question=question,
             rag_error=message,
@@ -822,6 +887,7 @@ def ask():
             active_chat=active_chat,
             chat_messages=chat_messages,
         ), 200
+
 
 
 @app.post("/logout")
